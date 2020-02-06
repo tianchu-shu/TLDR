@@ -8,7 +8,10 @@ sample = 'https://healthinformatics.uic.edu/blog/the-impact-of-health-informatic
 
 def tldr(link= sample):
     '''
-    Produces a coherent summary in 4-5 sentences from a url 
+    Finding the matches, possible matches and unmatches by iterating every 
+    possible pair of rows in zagat and fodors. Resulting csv file that that 
+    includes a row for each possible pair. 
+    Each row will have the zagat row index, fodors row index, and category.
     
     Inputs:
         link: (string) the url of the webpage
@@ -24,3 +27,5 @@ def tldr(link= sample):
     print("The original link is: " + link )
     print("The summary is:")
     return rv
+
+if __name__ == '__main__': main()
