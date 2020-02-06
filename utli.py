@@ -17,15 +17,19 @@ def tldr(link= sample):
         link: (string) the url of the webpage
     Returns: a list of string
     '''
+    #I use word_count as 150 to limit the summary to 4-5 sentences
+    wc =150
 
     extractor = extractors.ArticleExtractor()
     # From a URL
     content = extractor.get_content_from_url(str(link))
     
-    #I use word_count as 150 to limit the summary to 4-5 sentences
-    rv = summarize(content, word_count=150, split=True)
+    
+    rv = summarize(content, split=True)
+    while len(rv) >5:
+      rv = summarize(content, word_count=wc, split=True)
+      wc -= 10
+      
     print("The original link is: " + link )
     print("The summary is:")
     return rv
-
-if __name__ == '__main__': main()
