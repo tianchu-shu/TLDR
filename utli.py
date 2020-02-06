@@ -8,10 +8,7 @@ sample = 'https://healthinformatics.uic.edu/blog/the-impact-of-health-informatic
 
 def tldr(link= sample):
     '''
-    Finding the matches, possible matches and unmatches by iterating every 
-    possible pair of rows in zagat and fodors. Resulting csv file that that 
-    includes a row for each possible pair. 
-    Each row will have the zagat row index, fodors row index, and category.
+    Produces a coherent summary in 4-5 sentences from a url 
     
     Inputs:
         link: (string) the url of the webpage
