@@ -1,0 +1,44 @@
+import pandas as pd
+from fuzzywuzzy import fuzz  # or 'from rapidfuzz import fuzz' for faster version
+
+# Sample data
+data = {
+    'name': ['Apple Inc', 'apple', 'Microsoft', 'microsoft', 'Tesla', 'tesla']
+}
+df = pd.DataFrame(data)
+
+# Function to merge similar names based on fuzzy matching score
+def fuzzy_merge(df, threshold=50):
+    # Initialize a dictionary to store groups of similar names
+    groups = {}
+    merged_column = [None] * len(df)  # New column for merged names, initialized with None
+
+    # Loop over all rows in the DataFrame
+    for i, value1 in enumerate(df['name']):
+        group_found = False
+        for group_key, group_values in groups.items():
+            # Compare current value to group key
+            if fuzz.ratio(value1, group_key) > threshold:  # If fuzzy match score is higher than threshold
+                group_values.append(i)  # Add this index to the group's list of rows
+                group_found = True
+                break
+
+        if not group_found:
+            # If no group is found, create a new group for this value
+            groups[value1] = [i]
+
+    # Assign the merged name for each row based on its group
+    for group_key, group_values in groups.items():
+        merged_name = group_key  # Use the first name in the group as the merged name
+        for idx in group_values:
+            merged_column[idx] = merged_name  # Assign the merged name to each row in the group
+
+    # Add the merged names as a new column in the dataframe
+    df['merged_name'] = merged_column
+    return df
+
+# Call the function with a threshold of 50
+df_merged = fuzzy_merge(df, threshold=50)
+
+# Show the result
+print(df_merged)
